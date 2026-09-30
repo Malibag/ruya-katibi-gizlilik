@@ -70,9 +70,9 @@
 <main>
   <article>
     <h1>Gizlilik Politikası</h1>
-    <p class="updated"><strong>Rüya Kâtibi</strong> · Son güncelleme: 24 Eylül 2026</p>
+    <p class="updated"><strong>Rüya Kâtibi</strong> · Son güncelleme: 30 Eylül 2026</p>
 
-    <p>Bu Gizlilik Politikası, Rüya Kâtibi mobil uygulamasında (“Uygulama”) verilerin nasıl işlendiğini açıklar. Uygulama; cihazda rüya ve kart tabirleri oluşturma, kullanıcının açıkça talep ettiği Derin Rüya Tabiri, yerel geçmiş, bildirim, cihaz kilidi, ödüllü reklam, teknik ölçüm ve Google Play üzerinden satın alma özellikleri sunar.</p>
+    <p>Bu Gizlilik Politikası, Rüya Kâtibi mobil uygulamasında (“Uygulama”) verilerin nasıl işlendiğini açıklar. Uygulama; Android ve iOS cihazlarda rüya ve kart tabirleri oluşturma, kullanıcının açıkça talep ettiği Derin Rüya Tabiri, yerel geçmiş, bildirim, cihaz kilidi, ödüllü reklam, teknik ölçüm ve Google Play (Android) ve App Store (iOS) üzerinden satın alma özellikleri sunar.</p>
     <div class="notice"><strong>Önemli:</strong> Kart tabirleri ve Derin Rüya Tabiri eğlence ve kişisel farkındalık amaçlıdır. Kesin gerçek, kehanet, tıbbi veya psikolojik değerlendirme ya da profesyonel danışmanlık niteliği taşımaz.</div>
 
     <h2>1. Hesap ve doğrudan kimlik bilgileri</h2>
@@ -84,10 +84,17 @@
       <li>rüya metinleri, kart metinleri, Derin Rüya Tabiri sonuçları, rüyanın kullanıcıya mı başka bir kişiye mi ait olduğu, uyanma duygusu, ilişki durumu, yaşam dönemi ve kartların reklamla açılma durumu,</li>
       <li>isteğe bağlı rumuz ile genel ilişki durumu ve yaşam dönemi tercihleri,</li>
       <li>üyelik durumu, satın alınmış veya promosyon kullanım hakları ve yerel sayaçlar,</li>
-      <li>bildirim, atmosfer sesi, gizlilik kilidi, karşılama ekranı, yerel hatırlatıcılar ve diğer ayarlar,</li>
+      <li>bildirim, gizlilik kilidi, karşılama ekranı, yerel hatırlatıcılar ve diğer ayarlar,</li>
       <li>kötüye kullanım sınırlaması için rastgele üretilen kurulum tanımlayıcısı (<code>deviceId</code>).</li>
     </ul>
-    <p><code>deviceId</code>, UUID v4 biçiminde rastgele üretilir; reklam kimliği, Firebase Installation ID, Android ID, IMEI veya donanım bilgisinden türetilmez. Android’in sistem yedekleme ayarları ve kullanıcının Google hesabı yapılandırmasına bağlı olarak SharedPreferences verileri yedeklenebilir ve yeniden kurulumda geri yüklenebilir; Uygulama bu sistem davranışını garanti etmez.</p>
+    <p><code>deviceId</code>, UUID v4 biçiminde rastgele üretilir; reklam kimliği, Firebase Installation ID, Android ID, IMEI veya donanım bilgisinden türetilmez.</p>
+
+    <h3>Yedekleme</h3>
+    <p>Uygulama, hesap gerektirmeyen bir yedek dosyası tutar: iOS’ta kullanıcının iCloud hesabındaki uygulamaya ait iCloud alanında, Android’de ise Android’in otomatik yedeklemesiyle kullanıcının Google hesabında. Yedeğe rüyalar, kartlar ve analiz sonuçları, yerel hatırlatıcılar, rumuz, ilişki durumu, yaşam dönemi, şehir bağlantıları ve promosyon uygunluk sayaçları girer.</p>
+    <p>Üyelik veya satın alma durumu, satın alınmış haklar, <code>deviceId</code> ve uygulama ayarları yedeğe girmez. Uygulama silinip yeniden kurulduğunda, cihazda veri yoksa yedek geri yüklenir. Yedekleme, cihazın iCloud veya Google yedekleme ayarlarına bağlıdır.</p>
+
+    <h3>Şehir bağlantıları</h3>
+    <p>Rüyada bir il adı geçtiğinde kullanıcıya o şehirle bağı sorulabilir (memleket, yaşadığı yer, ailesinin olduğu yer, ziyaret ettiği yer vb.). Cevap yalnız cihazda ve yukarıda açıklanan yedekte saklanır; backend’e, OpenAI’ye, Analytics’e veya Meta’ya gönderilmez. Ayarlar &gt; Bilgileriniz &gt; Şehir bağlantıların bölümünden değiştirilebilir veya silinebilir.</p>
 
     <h3>Konuşarak yazma ve mikrofon kullanımı</h3>
     <p>Rüya giriş alanındaki konuşarak yazma özelliği isteğe bağlıdır. Mikrofon yalnız kullanıcı mikrofon butonuna dokunarak bu özelliği başlattığında kullanılır. Android’de mikrofon erişimi için <code>RECORD_AUDIO</code> izni; iOS’ta mikrofon ve konuşma tanıma erişimi için <code>NSMicrophoneUsageDescription</code> ve <code>NSSpeechRecognitionUsageDescription</code> izin açıklamaları kullanılır.</p>
@@ -114,7 +121,7 @@
 
     <h2>5. Rate-limit ve Firebase App Check</h2>
     <p>Kötüye kullanımı önlemek için Firestore’daki <code>deepAnalysisRateLimits</code> koleksiyonunda <code>deviceId</code> ile tarih birleşimine dayalı teknik sayaç belgeleri tutulur. Bu belgeler rüya, kart, kişiselleştirme veya analiz sonucu içermez; <code>count</code>, <code>updatedAt</code> ve <code>expiresAt</code> alanlarını içerir. Yeni veya güncellenen belgelerin sona erme zamanı yaklaşık 48 saat sonrası olarak belirlenir ve Firestore TTL politikasıyla otomatik silinmek üzere işaretlenir. TTL silme işlemi sona erme anında derhâl gerçekleşmeyebilir.</p>
-    <p>Firebase App Check, Play Integrity aracılığıyla uygulama ve cihaz bütünlüğüne ilişkin teknik doğrulama tokenı üretebilir. Token Derin Rüya Tabiri isteğinin HTTP başlığında backend’e iletilir; Analytics olayı değildir ve OpenAI’ye gönderilmez.</p>
+    <p>Firebase App Check, Android’de Play Integrity, iOS’ta App Attest aracılığıyla uygulama ve cihaz bütünlüğüne ilişkin teknik doğrulama tokenı üretebilir. Token Derin Rüya Tabiri isteğinin HTTP başlığında backend’e iletilir; Analytics olayı değildir ve OpenAI’ye gönderilmez.</p>
 
     <h2>6. OpenAI</h2>
     <p>Backend, Derin Rüya Tabirini oluşturmak için rüya metni, kart metinleri, uyanma duygusu, ilişki durumu, yaşam dönemi ve rüyanın kime ait olduğu bilgisini OpenAI Responses API’ye gönderir. İsteklerde <code>store: false</code> kullanılır; bu, Responses API uygulama durumu saklamasını kapatır.</p>
@@ -127,34 +134,43 @@
     <p><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase Gizlilik ve Güvenlik</a> · <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Gizlilik Politikası</a></p>
 
     <h2>8. Biyometrik doğrulama ve bildirimler</h2>
-    <p>Gizlilik kilidini etkinleştirirseniz Android’in cihaz doğrulama sistemi kullanılabilir. Parmak izi, yüz görüntüsü veya biyometrik şablon Uygulama tarafından görülmez, sunucuya gönderilmez ve saklanmaz. İzin vermeniz hâlinde cihazınızda yerel bildirim ve hatırlatıcılar gösterilebilir. Kişi listesi, SMS veya arama verilerine erişilmez.</p>
+    <p>Gizlilik kilidini etkinleştirirseniz cihazın kendi doğrulama sistemi (Android’de parmak izi/yüz tanıma, iOS’ta Face ID / Touch ID) kullanılabilir. Parmak izi, yüz görüntüsü veya biyometrik şablon Uygulama tarafından görülmez, sunucuya gönderilmez ve saklanmaz. İzin vermeniz hâlinde cihazınızda yerel bildirim ve hatırlatıcılar gösterilebilir. Kişi listesi, SMS veya arama verilerine erişilmez.</p>
 
     <h2>9. Reklamlar, UMP ve tercihler</h2>
     <p>Standart kullanıcılar kartlara erişmek için Google AdMob üzerinden ödüllü reklamı tamamlar; premium kullanıcılar kartları reklamsız açar. Google’ın ödül callback’i alınmadan kartlar açılmaz; tamamlanan bir reklam ilgili rüyanın tüm kartlarını kalıcı açar. Kodda geçiş reklamı altyapısı bulunsa da geçiş reklamları mevcut normal kullanıcı akışında kapalıdır; yüklenmez ve gösterilmez.</p>
     <p>Google Mobile Ads SDK; IP adresi ve bundan türetilebilen yaklaşık konum, reklam ve uygulama etkileşimleri, teşhis ve performans bilgileri, Advertising ID, App Set ID ve diğer cihaz/uygulama tanımlayıcılarını reklam sunumu, ölçüm, sahtekârlığı önleme ve güvenlik amacıyla işleyebilir. Uygulama GPS veya kesin konum istemez.</p>
-    <p>Meta Audience Network SDK da reklam sunumu ve ölçümü için cihaz tanımlayıcıları, yaklaşık konum, uygulama içi reklam etkileşimleri, teşhis/performans verileri ve benzeri teknik bilgileri işleyebilir. Meta, bu verileri kendi gizlilik ilkeleri ve reklam politikaları kapsamında kullanabilir.</p>
+    <h3>Meta (Facebook) App Events ve reklam ölçümü</h3>
+    <p>Uygulama, reklam kampanyalarının etkinliğini ölçmek için Meta App Events SDK’sını kullanır. Uygulamanın kendisi yalnız ilk rüya kartlarının görüntülenmesi, ilk Derin Rüya Tabiri ve premium dönüşümü olaylarını gönderir; premium dönüşümünde yalnız ürün türü (<code>monthly</code>, <code>yearly</code> veya <code>one_time</code>) gönderilir.</p>
+    <p>SDK ayrıca uygulama kurulumu ve açılışı gibi standart olayları otomatik ölçebilir; cihaz tanımlayıcıları ve teknik bilgiler Meta tarafından kendi politikaları kapsamında işlenebilir. Rüya veya kart metni, rumuz, ilişki durumu, yaş, duygu ya da şehir bilgisi Meta’ya gönderilmez.</p>
+
+    <h3>iOS’ta izleme izni (App Tracking Transparency)</h3>
+    <p>iOS’ta, onboarding’deki kişiselleştirme sorularından sonra Apple’ın sistem penceresiyle izleme izni istenir. İzin verilirse reklam tanımlayıcısı (IDFA) reklam ölçümü ve kişiselleştirilmiş reklam için kullanılabilir. İzin verilmezse tanımlayıcı kullanılmaz ve reklamlar kişiselleştirilmemiş olarak istenir.</p>
+    <p>Kullanıcı kararını istediği zaman iPhone Ayarlar &gt; Gizlilik ve Güvenlik &gt; İzleme bölümünden değiştirebilir. Uygulama, App Store gizlilik beyanında “Cihaz Kimliği” ve “Reklam Verileri” için izleme bildirmektedir.</p>
     <p>Google User Messaging Platform (UMP), Avrupa Ekonomik Alanı, Birleşik Krallık ve İsviçre gibi kapsanan bölgelerde gerekli olduğunda izin verme, izin vermeme veya seçenekleri yönetme tercihlerini alabilir. Kullanıcı rıza vermeden mesajı kapatamaz. Google gerekli gördüğünde Ayarlar ekranında “Gizlilik Seçenekleri” gösterilir.</p>
     <p><code>canRequestAds()</code> yalnız reklam isteği uygunluğunu belirler; Analytics veya reklam depolama izinlerine toplu rıza olarak çevrilmez. Analytics ve reklam Consent Mode başlangıç değerleri kullanıcı tercihi belirlenene kadar kapalıdır; UMP/Google eşlemesi manuel uygulama koduyla ezilmez.</p>
-    <p><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google Reklam Politikaları</a> · <a href="https://developers.google.com/admob/android/privacy/play-data-disclosure" target="_blank" rel="noopener noreferrer">Mobile Ads SDK veri açıklaması</a> · <a href="https://developers.facebook.com/blog/post/2022/07/18/resources-for-completing-app-store-data-practice-questionnaires-apps-facebook-or-audience-network-sdk/" target="_blank" rel="noopener noreferrer">Meta Audience Network SDK veri özeti</a></p>
+    <p><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google Reklam Politikaları</a> · <a href="https://developers.google.com/admob/android/privacy/play-data-disclosure" target="_blank" rel="noopener noreferrer">Mobile Ads SDK veri açıklaması</a></p>
 
-    <h2>10. Google Play Billing</h2>
-    <p>Tek kullanımlık Derin Rüya Tabiri hakkı ile aylık ve yıllık premium abonelikler Google Play Billing üzerinden sunulabilir. Ödeme Google Play’in güvenli arayüzünde gerçekleşir; kart veya banka bilgileri Uygulamaya ya da geliştirici backend’ine ulaşmaz.</p>
-    <p>Uygulama satın alma akışında durum ve ürün kimliğini kullanır; satın alma tokenını veya makbuzu okuyup backend’e ya da Analytics’e göndermez. Cihazda yalnız üyelik durumu ve satın alınmış/promosyon haklarına ilişkin türetilmiş sayaçlar saklanır. Özel Analytics satın alma olayında yalnız ürün türü yer alır. Google Play satın alma kayıtlarını kendi koşulları kapsamında işleyebilir ve satın alımları geri yükleyebilir.</p>
+    <h2>10. Uygulama içi satın almalar (Google Play ve App Store)</h2>
+    <p>Tek kullanımlık Derin Rüya Tabiri hakkı ile aylık ve yıllık premium abonelikler Android’de Google Play Billing, iOS’ta App Store / StoreKit üzerinden sunulabilir. Ödeme ilgili mağazanın güvenli arayüzünde gerçekleşir; kart veya banka bilgileri Uygulamaya ya da geliştirici backend’ine ulaşmaz.</p>
+    <p>Uygulama satın alma akışında durum ve ürün kimliğini kullanır; satın alma tokenını veya makbuzu okuyup backend’e ya da Analytics’e göndermez. Cihazda yalnız üyelik durumu ve satın alınmış/promosyon haklarına ilişkin türetilmiş sayaçlar saklanır. Özel Analytics satın alma olayında yalnız ürün türü yer alır. Google Play ve App Store satın alma kayıtlarını kendi koşulları kapsamında işleyebilir ve satın alımları geri yükleyebilir.</p>
+
+    <h3>Mağaza puanlaması</h3>
+    <p>Uygulama zaman zaman App Store / Google Play’in kendi puanlama penceresini gösterebilir. Puan ve yorum doğrudan mağazaya iletilir; Uygulama bu bilgiyi görmez.</p>
 
     <h2>11. Dışa aktarma</h2>
-    <p>“Verilerimi indir” işlemi yalnız kullanıcının onayından sonra Android paylaşım ekranını açar. TXT içeriğinde rumuz, atmosfer, genel ilişki durumu ve yaşam dönemi ile her rüyanın tarihi, türü, gizlilik durumu, rüya metni, kart metinleri ve varsa Derin Rüya Tabiri sonucu bulunabilir. <code>deviceId</code> veya teknik kimlik eklenmez. Paylaşılacak hedef kullanıcı tarafından seçilir.</p>
+    <p>“Verilerimi indir” işlemi yalnız kullanıcının onayından sonra cihazın paylaşım ekranını açar. TXT içeriğinde rumuz, atmosfer, genel ilişki durumu ve yaşam dönemi ile her rüyanın tarihi, türü, gizlilik durumu, rüya metni, kart metinleri ve varsa Derin Rüya Tabiri sonucu bulunabilir. <code>deviceId</code> veya teknik kimlik eklenmez. Paylaşılacak hedef kullanıcı tarafından seçilir.</p>
 
     <h2>12. Silme ve saklama</h2>
     <ul>
       <li>Tek rüyayı silmek, o rüyanın metnini, kartlarını, analizini ve reklamla açılma durumunu yerel listeden kaldırır.</li>
-      <li>“Tüm rüya verilerini sil” tüm rüyaları ve yerel hatırlatıcıları kaldırır; rumuz, profil tercihleri, üyelik/satın alma sayaçları, genel ayarlar ve <code>deviceId</code> silinmez.</li>
+      <li>“Tüm rüya verilerini sil” tüm rüyaları, kartları, analiz sonuçlarını, hatırlatıcıları, rumuzu, ilişki durumunu, yaşam dönemini ve şehir bağlantılarını siler. Bulut yedeği de bu boş hâliyle hemen güncellenir. iOS’ta iCloud yedeği hemen temizlenir. Android’de Google yedeği, Android’in bir sonraki otomatik yedeklemesinde güncellenir; bu işlem 24 saate kadar sürebilir ve bu süre içinde yeniden kurulumda eski veriler geri gelebilir. Üyelik ve satın alınmış haklar, genel ayarlar, <code>deviceId</code> ve yedekteki kişisel olmayan promosyon sayacı silinmez.</li>
       <li>Profil, ayar ve <code>deviceId</code> dâhil tüm uygulama verileri Android ayarlarından temizlenebilir veya uygulama kaldırılabilir. Sistem yedeği etkinse bazı yerel veriler yeniden yüklenebilir.</li>
       <li>Backend’de kullanıcı hesabına bağlı kalıcı rüya veya sonuç arşivi bulunmaz.</li>
       <li>Reklam ve rıza tercihleri, gerekli olduğunda Uygulamadaki Gizlilik Seçenekleri veya cihaz/Google ayarlarından değiştirilebilir.</li>
     </ul>
 
     <h2>13. Paylaşım ve hizmet sağlayıcılar</h2>
-    <p>Veriler satılmaz veya kiralanmaz. Veriler yalnız açıklanan işlevler için Google Firebase, Google AdMob/UMP, Meta Audience Network, Google Play ve OpenAI gibi hizmet sağlayıcılarca işlenebilir; ayrıca yasal zorunluluk veya hak ve güvenliğin korunması hâlinde yetkili makamlarla paylaşılabilir.</p>
+    <p>Veriler satılmaz veya kiralanmaz. Veriler yalnız açıklanan işlevler için Google Firebase, Google AdMob/UMP, Meta (App Events), Google Play ve OpenAI gibi hizmet sağlayıcılarca işlenebilir; ayrıca yasal zorunluluk veya hak ve güvenliğin korunması hâlinde yetkili makamlarla paylaşılabilir.</p>
 
     <h2>14. Güvenlik ve uluslararası aktarım</h2>
     <p>Backend ve sağlayıcılarla iletişimde HTTPS/TLS kullanılır. Veri minimizasyonu ve içerik taşımayan güvenli loglama gibi önlemler uygulanır; hiçbir elektronik aktarım veya saklama yöntemi mutlak güvenlik sağlayamaz. Hizmet sağlayıcılar farklı ülkelerde faaliyet gösterebildiğinden veriler Türkiye dışındaki sunucularda geçerli hukuk ve sağlayıcı koruma mekanizmaları kapsamında işlenebilir.</p>
